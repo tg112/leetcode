@@ -17,17 +17,3 @@ Explanation:
 rotate 1 steps to the right: [99,-1,-100,3]
 rotate 2 steps to the right: [3,99,-1,-100]
 """
-
-def rotate_array(nums: list[int], k: int) -> None:
-    n = len(nums)
-    k = k % n  # kがnより大きい場合の対策
-
-    def reverse(l, r):
-        while l < r:
-            nums[l], nums[r] = nums[r], nums[l]
-            l += 1
-            r -= 1
-
-    reverse(0, n - 1)
-    reverse(0, k - 1)
-    reverse(k, n - 1)
