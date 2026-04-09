@@ -23,19 +23,20 @@ def longestConsecutive(nums: list[int]) -> int:
 
         # return longest_length
 
-        num_set = set(nums)
+        # ex) [1, 10, 5, 2 ,6, 7]
+        set_nums = set(nums)
         longest = 0
-
-        for num in num_set:
-            # 「連続のスタート」だけ処理する
-            if num - 1 not in num_set:
-                current = num
+        
+        # num = 5
+        for num in set_nums:
+            # targetの1つ前の数字からcount upする
+            if num - 1 not in set_nums: 
+                current_num = num # 5
                 length = 1
 
-                while current + 1 in num_set:
-                    current += 1
-                    length += 1
+                while current_num + 1 in set_nums: # 6 -> 7
+                    current_num += 1 # 6 -> 7
+                    length += 1 # 2 -> 3
 
                 longest = max(longest, length)
-        return longest
 
