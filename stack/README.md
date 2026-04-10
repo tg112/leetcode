@@ -1,5 +1,7 @@
 ## Stack(LIFO: Last In First Out)
 
+**Stackは積む**
+
 A stack is a linear data structure that follows the LIFO (Last In, First Out) principle.  
 This means: The last element added to the stack is the first one to be removed.  
 
