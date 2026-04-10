@@ -47,6 +47,35 @@ class HashTable:
 
         return all_keys
 
+    def set_item_linear_probing(self, key, value):
+        index = self.__hash(key)
+
+        while self.data_map[index] is not None:
+            # 同じキーなら更新
+            if self.data_map[index][0] == key:
+                self.data_map[index][1] = value
+                return
+            index = (index + 1) % len(self.data_map)
+
+        self.data_map[index] = [key, value]
+
+    def get_item_linear_probing(self, key):
+        index = self.__hash(key)
+
+        start_index = index  # 無限ループ防止
+
+        while self.data_map[index] is not None:
+            if self.data_map[index][0] == key:
+                return self.data_map[index][1]
+
+            index = (index + 1) % len(self.data_map)
+
+            # 一周したら終了
+            if index == start_index:
+                break
+
+        return None
+
 
 my_hash_table = HashTable()
 my_hash_table.set_item("banana", 1400)
