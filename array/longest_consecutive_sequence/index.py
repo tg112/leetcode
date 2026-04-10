@@ -39,5 +39,5 @@ def longestConsecutive(nums: list[int]) -> int:
                     length += 1 # 2 -> 3
 
                 longest = max(longest, length)
-            return longest 
+        return longest 
 
