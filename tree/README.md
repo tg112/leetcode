@@ -123,3 +123,124 @@ A Binary Search Tree is a tree data structure where each node follows the rule t
 ---
 
 > Recursion is more intuitive and cleaner for problems like trees, but iteration is more memory-efficient and safer in production because it avoids stack overflow.
+
+## BFS vs DFS
+
+### Overview
+
+|                | BFS (Breadth-First Search) | DFS (Depth-First Search) |
+| -------------- | -------------------------- | ------------------------ |
+| Strategy       | Level by level             | Go as deep as possible   |
+| Data Structure | Queue (FIFO)               | Stack (LIFO) / Recursion |
+| Order          | Wide → Deep                | Deep → Backtrack         |
+
+---
+
+### Traversal Example
+
+#### Tree
+
+```
+        A
+       / \
+      B   C
+     / \
+    D   E
+```
+
+#### BFS
+
+```
+A → B → C → D → E
+```
+
+#### DFS
+
+##### Pre-order
+
+```
+A → B → D → E → C
+```
+
+##### In-order (BST only meaningful)
+
+```
+D → B → E → A → C
+```
+
+#### Post-order
+
+```
+D → E → B → C → A
+```
+
+---
+
+### Time & Space Complexity
+
+|       | BFS  | DFS  |
+| ----- | ---- | ---- |
+| Time  | O(n) | O(n) |
+| Space | O(n) | O(h) |
+
+※ h = tree height
+
+---
+
+### Advantages
+
+#### BFS
+
+* Finds shortest path (unweighted graph)
+* Good for level-order traversal
+
+#### DFS
+
+* Less memory (usually)
+* Good for full traversal / backtracking
+
+---
+
+### Disadvantages
+
+#### BFS
+
+* Uses more memory (queue can grow large)
+
+#### DFS
+
+* Can go very deep → stack overflow (recursion)
+
+---
+
+### When to Use
+
+#### Use BFS when:
+
+* Shortest path (unweighted)
+* Level-order traversal
+* Minimum steps problems
+
+#### Use DFS when:
+
+* Tree traversal (inorder, preorder, postorder)
+* Backtracking (permutations, combinations)
+* Cycle detection
+
+---
+
+### Implementation
+
+#### BFS
+
+* Use Queue (`deque`)
+* Use `popleft()`
+
+#### DFS
+
+* Use Recursion OR Stack
+* Traverse deeply first
+
+---
+
+> BFS explores nodes level by level using a queue, while DFS explores as deep as possible using a stack or recursion. BFS is useful for shortest path problems, while DFS is better for full traversal and backtracking.
