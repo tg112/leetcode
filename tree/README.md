@@ -51,3 +51,75 @@ Linked Listと同じ構造
 
 A Binary Search Tree is a tree data structure where each node follows the rule that values in the left subtree are smaller and values in the right subtree are larger. This allows search operations to run in O(log n) on average, unlike a linked list which requires O(n) time because it must traverse nodes sequentially. However, if the tree becomes unbalanced, the time complexity degrades to O(n), making it similar to a linked list.
 
+
+## Recursion vs Iteration
+
+### 🔁 Overview
+
+|             | Recursion                | Iteration              |
+| ----------- | ------------------------ | ---------------------- |
+| Definition  | Function calls itself    | Uses loops (while/for) |
+| Structure   | Uses call stack          | Uses variables         |
+| Readability | More intuitive for trees | More explicit          |
+
+---
+
+### ✅ Advantages
+
+#### Recursion
+
+* Cleaner and shorter code
+* Natural for tree/graph problems
+* Easier to reason about divide & conquer
+
+#### Iteration
+
+* More memory efficient
+* No risk of stack overflow
+* Faster in practice
+
+---
+
+### ❌ Disadvantages
+
+#### Recursion
+
+* Uses call stack → extra memory
+* Risk of stack overflow (deep recursion)
+* Slightly slower
+
+#### Iteration
+
+* Code can be more complex
+* Harder to implement for recursive structures
+
+---
+
+### ⏱ Time & Space
+
+|                  | Recursion         | Iteration |
+| ---------------- | ----------------- | --------- |
+| Time Complexity  | Same              | Same      |
+| Space Complexity | O(h) (call stack) | O(1)      |
+
+※ h = tree height
+
+---
+
+### 🎯 When to Use
+
+#### Use Recursion when:
+
+* Tree / Graph DFS
+* Divide & Conquer (MergeSort, QuickSort)
+* Problem is naturally recursive
+
+#### Use Iteration when:
+
+* Performance is critical
+* Deep recursion expected
+* Avoiding stack overflow is important
+
+---
+
+> Recursion is more intuitive and cleaner for problems like trees, but iteration is more memory-efficient and safer in production because it avoids stack overflow.
