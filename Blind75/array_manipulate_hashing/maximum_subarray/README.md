@@ -1,19 +1,25 @@
-# Maximum Subarray
+# Maximum Subarray (Kadane's Algorithm)
 
-**計算量**
+## 問題概要
+整数配列 `nums` から、要素の合計が最大となる連続部分配列を見つけ、その合計値を返す。
 
-- 時間計算量：O(n)
-- 空間計算量：O(1)
+## 計算量
+- 時間計算量: O(n)
+- 空間計算量: O(1)
 
-## Approach
-1. We start by initializing two variables: maxSum and currentSum.
-    - maxSum represents the maximum sum encountered so far and is initially set to the minimum possible integer value to ensure that any valid subarray sum will be greater than it.
-    - currentSum represents the current sum of the subarray being considered and is initially set to 0.
-2. We iterate through the nums array using a for loop, starting from the first element and going up to the last element.
-3. For each element in the array, we add it to the current sum currentSum. This calculates the sum of the subarray ending at the current element.
-4. Next, we check if the current sum currentSum is greater than the current maximum sum maxSum.
-    - If it is, we update maxSum with the new value of currentSum. This means we have found a new maximum subarray sum.
-5. If the current sum currentSum becomes negative, it indicates that including the current element in the subarray would reduce the overall sum. In such cases, we reset currentSum to 0. This effectively discards the current subarray and allows us to start a fresh subarray from the next element.
-6. We repeat steps 3 to 5 for each element in the array.
-7. After iterating through the entire array, the variable maxSum will contain the maximum subarray sum encountered.
-8. Finally, we return the value of maxSum as the result, representing the maximum sum of a contiguous subarray within the given array nums.
+## アプローチ
+
+**Kadane's Algorithm** — 「今ここから再スタートする」か「前の合計に乗り続ける」かを毎ステップ選択する。
+
+```
+current_sum = max(num, current_sum + num)
+```
+
+- `current_sum + num < num`（＝`current_sum < 0`）なら、前の累積は足を引っ張るだけなので捨てて `num` から再スタート
+- そうでなければ、前の累積を活かして伸ばし続ける
+
+毎ステップで `max_sum = max(max_sum, current_sum)` を更新し、最終的な最大値を記録する。
+
+## ポイント
+- 初期値を `nums[0]` にする理由：配列がすべて負の場合でも正しく最大値を返すため（`0` や `-∞` で初期化すると全負配列で誤答になる）
+- `max(num, current_sum + num)` は「負の累積を切り捨てる」操作と等価で、`current_sum` が負になった瞬間にリセットされる

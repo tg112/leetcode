@@ -1,81 +1,47 @@
-# TWO Sum
+# Two Sum
 
-**計算量**
+## 問題概要
+整数配列 `nums` と整数 `target` が与えられる。合計が `target` となる2つの数のインデックスを返す。  
+解は必ず1つ存在し、同じ要素を2回使ってはいけない。
 
-- 時間計算量：O(n)
-- 空間計算量：O(n)
+## 計算量
+- 時間計算量: O(n) — 1回のループ + O(1) のハッシュマップ参照
+- 空間計算量: O(n) — ハッシュマップに最大 n 個の要素を格納
 
+## アプローチ
 
-## 概要
+**Hash Map（辞書）** を使い、ブルートフォース O(n²) を O(n) に改善する。
 
-So the problem is: given an array of integers and a target, I need to return the indices of two numbers such that they add up to the target. I assume there is exactly one solution, and I cannot use the same element twice.
+各要素について:
+1. `complement = target - nums[i]` を計算
+2. `complement` が辞書に存在すれば → そのインデックスと現在の `i` を返す
+3. 存在しなければ → `nums[i]: i` を辞書に登録して次へ
 
-A brute force approach would check all pairs in O(n²), but we can optimize it using a hash map.
+1回のループで済む理由：過去に見た要素を辞書に蓄積しているため、前方を再スキャンする必要がない。
 
-I’ll use a dictionary to store previously seen numbers and their indices.　For each number, I compute the complement as target minus the current number.　If the complement is already in the dictionary, I return the indices. Otherwise, I store the current number.
+## ポイント
 
-The time complexity is O(n) because we iterate once, and dictionary lookups are O(1) on average. Space complexity is O(n).
+**`map.get(key)` の落とし穴**  
+インデックス `0` は Python で `False` と評価されるため、`if map.get(complement)` は `complement` のインデックスが `0` のときに誤って `False` と判定する。  
+→ `if complement in map:` を使うのが正しい。
 
+## JavaScript メモ：Map vs Object
 
-`if num_map.get(complement):` Using get() directly can be problematic because index 0 evaluates to False.
-
-
-Q. なぜ1回のループでいいの？
-
-Because we store previously seen elements, so we don’t need to scan the array again.
-
-Q. なぜdictを使う？
-
-Because it provides O(1) lookup, which reduces time complexity from O(n²) to O(n).
-
-
-
-
-complement: `差分`
-
-## JavaScript
-
-### Map vs Object
-
-#### Object
-
-- キーは 文字列 or Symbolのみ(数値も強制的に文字列になる)
-- 順序は保証されない
-- パフォーマンス
-  - 小規模 & 単純用途なら速い
-  - ただしキー数が増えると微妙
+| 特性 | Object | Map |
+|---|---|---|
+| キーの型 | 文字列・Symbol のみ（数値も文字列化） | 任意の型 |
+| 挿入順の保証 | なし | あり |
+| サイズ取得 | `Object.keys(obj).length` | `map.size` |
+| 向いている用途 | 小規模・単純な用途 | 大量データ・頻繁な追加削除 |
 
 ```javascript
+// Object
 const obj = {};
 obj[1] = "a";
+console.log(obj); // { "1": "a" } ← 数値キーが文字列化される
 
-console.log(obj); // { "1": "a" }
-
-// 操作
-obj[key] = value;
-obj[key];
-delete obj[key];
-Object.keys(obj).length
-```
-
-#### Map
-
-- **どんな型**でもキーにできる
-- 挿入順が保証される
-- パフォーマンス
-  - 大量データで強い
-  - 頻繁な追加・削除に向いてる
-
-```javascript
+// Map
 const map = new Map();
 map.set(1, "a");
-
-// 操作
-map.set(key, value);
-map.get(key);
-map.has(key);
-map.delete(key);
-map.size
+console.log(map.get(1)); // "a" ← 数値キーのまま扱える
 ```
-
-console.log(map.get(1)); // "a"

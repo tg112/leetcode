@@ -1,17 +1,31 @@
-# 3 Sum
+# 3Sum
 
-## Point
+## 問題概要
+整数配列 `nums` が与えられる。`nums[i] + nums[j] + nums[k] == 0` となる、重複なしのすべての三つ組を返す。
 
--　「重複をいかに効率よく排除するか」と「いかに計算量を $O(N^3)$ から $O(N^2)$ に落とすか」の2点。
--　配列の組み合わせ問題で「重複を許さない」と言われたら、まずは**「最初にソートできないか？」**を考える癖をつけると一気に解法が見えやすくなります。
-- `2 pointer`: 基準値 i を固定したあと、残りの探索を left と right の両端から狭めていく手法。**ソート済み配列だからこそ機能する技**で、本来なら残りの2つの探索に $O(N^2)$ かかるところを $O(N)$ に短縮しています。
+## 計算量
+- 時間計算量: O(n²) — ソートに O(n log n)、基準値ループ × 2ポインタ探索で O(n²)
+- 空間計算量: O(1) — 出力配列を除く
 
-## Efficient Solution
+## アプローチ
 
-1. Sort the Array: Begin by sorting the array. This helps in easily skipping over duplicates and using two pointers effectively.
+**ソート + Two Pointers** でブルートフォース O(n³) を O(n²) に改善する。
 
-2. Iterate with a Fixed Pointer: Use a loop to fix one number, then apply a two-pointer approach for the remaining sub-array.
+1. 配列を昇順ソート（2ポインタと重複排除の前提）
+2. インデックス `i` で基準値 `nums[i]` を固定
+3. 残り `[i+1, n-1]` の範囲を `left`・`right` の2ポインタで両端から探索:
+   - `total == 0` → 結果に追加、両ポインタを内側へ
+   - `total < 0` → 合計を増やしたいので `left` を右へ
+   - `total > 0` → 合計を減らしたいので `right` を左へ
 
-3. Two-Pointer Technique: For each fixed element, use two pointers to find the remaining two elements that sum to zero. Start with one pointer at the next element (left), and the other pointer at the end (right) of the array.
+## ポイント
 
-4. Check and Adjust Pointers: If the sum of the three elements is zero, add it to the result. If the sum is less than zero, increment the left pointer; if it's greater, decrement the right pointer. This helps in narrowing down the search efficiently.
+**重複排除（3箇所）**
+1. `nums[i] == nums[i-1]` のとき `i` をスキップ（基準値の重複）
+2. 解が見つかった後、`left` の次が同じ値ならスキップ
+3. 解が見つかった後、`right` の手前が同じ値ならスキップ
+
+**早期終了**  
+ソート済みなので `nums[i] > 0` の時点で3つの合計が必ず正になる → `break` で残りをスキップ
+
+**組み合わせ問題で重複を排除したいとき → まずソートを検討する**

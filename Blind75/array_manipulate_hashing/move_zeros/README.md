@@ -1,19 +1,22 @@
-# TWO Sum
+# Move Zeros
 
-**計算量**
+## 問題概要
+整数配列 `nums` を **in-place** で操作し、すべての `0` を末尾に移動させる。非ゼロ要素の相対的な順序は保持すること。
 
-- 時間計算量：O(n)
-- 空間計算量：O(1)
+## 計算量
+- 時間計算量: O(n)
+- 空間計算量: O(1) — コピー配列を使わない in-place 操作
 
+## アプローチ
 
-## 概要
+**Two Pointers（仕分けパターン）**
 
-- Two Pointers（双方向ポインタ）の基本パターン
-- 「0以外を前に詰める」
-  - `left`：次に「非0」を置く位置
-  - `right`：配列をスキャンするポインタ
+- `left`：次に非ゼロ要素を置くべき位置
+- `right`：配列を走査するポインタ
 
+`nums[right] != 0` を見つけたら `nums[left]` と swap し、`left` を1つ進める。  
+これにより非ゼロ要素が前方に詰められ、`0` は自然に末尾へ追いやられる。
 
-I use a two-pointer approach. The right pointer scans the array, and the left pointer keeps track of the position to place the next non-zero element.
-Whenever I find a non-zero value, I swap it with the element at the left pointer and increment the left pointer.
-This way, all non-zero elements are moved to the front while maintaining their relative order, and zeros naturally move to the end.
+## ポイント
+- swap 方式なので、非ゼロ要素同士の相対順序が保たれる
+- 新しい配列を作らずに O(1) の空間で解ける点が重要（制約：in-place）

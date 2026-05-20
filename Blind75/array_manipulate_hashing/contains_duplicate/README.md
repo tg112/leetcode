@@ -1,19 +1,20 @@
 # Contains Duplicate
 
+## 問題概要
+整数配列 `nums` が与えられたとき、同じ値が2回以上出現すれば `true`、すべて異なれば `false` を返す。
+
 ## 計算量
-時間：O(n)（1回ループ）
-空間：O(n)（setに保存）
+- 時間計算量: O(n) — 配列を1回ループ
+- 空間計算量: O(n) — Set に要素を格納
 
-## 概要
+## アプローチ
 
-- Hash Set（集合）を使う基本問題
-  - すでに見た値かどうかを記録する。すでにみたことある -> 重複
-  - 初めて見るなら記憶
+**Hash Set** を使い、「すでに見た値か」を O(1) で確認する。
 
+1. 空の `set` を用意する
+2. 各要素について:
+   - `set` に存在すれば重複 → `True` を返す
+   - 存在しなければ `set` に追加して次へ
 
-The problem asks me to determine whether any value appears at least twice in the array. If so, we return true; otherwise, we return false.
-
-I use a hash set to keep track of the elements I've seen so far.
-As I iterate through the array, I check if the current number is already in the set.
-If it is, that means we found a duplicate, so I return true.
-Otherwise, I add the number to the set and continue.
+## ポイント
+- `list` の `in` 演算は O(n) だが、`set` の `in` 演算は平均 O(1) — これが高速化のカギ
